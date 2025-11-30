@@ -1,4 +1,3 @@
----
 # 🚀 **MAVEN GOALS PRACTICE — FULL STEP-BY-STEP GUIDE**
 
 ## ✅ **Step 1: Install Java & Maven (Local System)**
@@ -14,10 +13,6 @@ Check Maven:
 ```bash
 mvn -version
 ```
-
-If not installed, I’ll help you install.
-
----
 
 ## ✅ **Step 2: Clone Your Maven Project**
 
