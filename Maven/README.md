@@ -1,59 +1,25 @@
 ---
+# 🚀 **MAVEN GOALS PRACTICE — FULL STEP-BY-STEP GUIDE**
 
-# ✅ **Complete Guide: How to Practice Maven Goals on EC2 Using Your Project**
+## ✅ **Step 1: Install Java & Maven (Local System)**
 
-## **1️⃣ Launch EC2 Instance**
-
-Use **Amazon Linux 2023** or **Ubuntu 22.04**.
-
-Recommended:
-
-* **t2.micro** (Free tier)
-* Security group: Allow SSH (22)
-
-Connect via SSH:
-
-```bash
-ssh -i your-key.pem ec2-user@<EC2-Public-IP>
-```
-
----
-
-# **2️⃣ Install Java (JDK 17 or 11)**
-
-### **Amazon Linux 2023**
-
-```bash
-sudo dnf install java-17-amazon-corretto -y
-```
-
-### **Verify JAVA**
+Check Java:
 
 ```bash
 java -version
 ```
 
----
-
-# **3️⃣ Install Maven**
-
-### **Amazon Linux 2023**
-
-```bash
-sudo dnf install maven -y
-```
-
-### **Check Maven**
+Check Maven:
 
 ```bash
 mvn -version
 ```
 
+If not installed, I’ll help you install.
+
 ---
 
-# **4️⃣ Clone Your Maven Project**
-
-Clone your GitHub repo:
+## ✅ **Step 2: Clone Your Maven Project**
 
 ```bash
 git clone https://github.com/VLingarao/maven-project.git
@@ -62,19 +28,13 @@ cd maven-project
 
 ---
 
-# **5️⃣ Practice Most Important Maven Goals**
-
-Below are all goals you can practice + purpose + example.
+# ⭐ **Now Practice Maven Goals One by One**
 
 ---
 
-# 🔥 **MAVEN GOALS FOR PRACTICE**
+# 1️⃣ `mvn validate`
 
----
-
-## **1️⃣ mvn validate**
-
-Validates project structure, checks POM file.
+Checks whether your `pom.xml` is correct.
 
 ```bash
 mvn validate
@@ -82,9 +42,9 @@ mvn validate
 
 ---
 
-## **2️⃣ mvn compile**
+# 2️⃣ `mvn compile`
 
-Compiles source code into `/target/classes`.
+Compiles your Java code → output in `target/classes/`
 
 ```bash
 mvn compile
@@ -92,31 +52,9 @@ mvn compile
 
 ---
 
-## **3️⃣ mvn package**
+# 3️⃣ `mvn test`
 
-Creates `.jar` or `.war` file inside **target/** folder.
-
-```bash
-mvn package
-```
-
-After this:
-
-```bash
-ls target
-```
-
-You will see:
-
-```
-maven-project-1.0-SNAPSHOT.jar
-```
-
----
-
-## **4️⃣ mvn test**
-
-Runs unit test cases.
+Runs unit test cases inside `src/test/java`
 
 ```bash
 mvn test
@@ -124,9 +62,25 @@ mvn test
 
 ---
 
-## **5️⃣ mvn clean**
+# 4️⃣ `mvn package`
 
-Deletes target folder.
+Packages your project → JAR or WAR in `/target/`
+
+```bash
+mvn package
+```
+
+Check output:
+
+```bash
+ls target
+```
+
+---
+
+# 5️⃣ `mvn clean`
+
+Deletes the entire `target/` directory.
 
 ```bash
 mvn clean
@@ -134,9 +88,19 @@ mvn clean
 
 ---
 
-## **6️⃣ mvn clean install**
+# 6️⃣ `mvn clean package`
 
-Cleans old build + compiles + tests + packages + installs JAR to local repository (`~/.m2`)
+Clean → compile → test → package
+
+```bash
+mvn clean package
+```
+
+---
+
+# 7️⃣ `mvn clean install`
+
+Clean → compile → test → package → install in local repo `~/.m2`
 
 ```bash
 mvn clean install
@@ -144,9 +108,7 @@ mvn clean install
 
 ---
 
-## **7️⃣ mvn clean package -DskipTests**
-
-Build faster by skipping tests.
+# 8️⃣ Skip Tests (Faster Build)
 
 ```bash
 mvn clean package -DskipTests
@@ -154,9 +116,7 @@ mvn clean package -DskipTests
 
 ---
 
-## **8️⃣ mvn dependency:tree**
-
-Shows dependency hierarchy.
+# 9️⃣ Show Dependency Tree
 
 ```bash
 mvn dependency:tree
@@ -164,35 +124,7 @@ mvn dependency:tree
 
 ---
 
-## **9️⃣ mvn verify**
-
-Executes integration tests + verifies project.
-
-```bash
-mvn verify
-```
-
----
-
-## **🔟 mvn site**
-
-Generates HTML documentation for project.
-
-```bash
-mvn site
-```
-
-Output → **target/site/index.html**
-
----
-
-# 🎯 **Extra Useful Goals for Interviews**
-
----
-
-## **mvn dependency:resolve**
-
-Downloads dependencies.
+# 🔟 Download All Dependencies
 
 ```bash
 mvn dependency:resolve
@@ -200,40 +132,49 @@ mvn dependency:resolve
 
 ---
 
-## **mvn archetype:generate**
+# 1️⃣1️⃣ Verify Lifecycle
 
-Create new Maven project from template.
+Runs all steps + integration tests.
 
 ```bash
-mvn archetype:generate
+mvn verify
 ```
 
 ---
 
-# ⭐ BONUS: Run your Java JAR on EC2
+# 1️⃣2️⃣ Generate Documentation (HTML Reports)
 
-After building:
+```bash
+mvn site
+```
+
+Output:
+
+```
+target/site/index.html
+```
+
+---
+
+# ⭐ **Bonus: Run Your Built JAR**
+
+After packaging:
 
 ```bash
 cd target
 java -jar maven-project-1.0-SNAPSHOT.jar
 ```
 
-If your project prints output, you will see it here.
-
 ---
 
-# 🏁 Final Flow for Daily Practice
+# 🏁 **Daily Practice Flow (Best Sequence)**
 
 ```bash
-git clone <repo>
-cd maven-project
-
+mvn clean
 mvn validate
 mvn compile
 mvn test
 mvn package
-mvn clean
 mvn clean install
 mvn dependency:tree
 ```
