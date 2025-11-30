@@ -2,16 +2,33 @@
 
 ## ✅ **Step 1: Install Java & Maven (Local System)**
 
-Check Java:
+1️⃣ Amazon Linux 2023
+```bash
+sudo dnf install java-17-amazon-corretto -y
+```
 
+2️⃣ Install Maven
+```bash
+sudo dnf install maven -y
+```
+3️⃣ Install Git
+```bash
+sudo dnf install git -y
+```
+
+Check Maven
+```bash
+mvn -version
+```
+
+Check Java:
 ```bash
 java -version
 ```
 
-Check Maven:
-
+Check Git:
 ```bash
-mvn -version
+git -version
 ```
 
 ## ✅ **Step 2: Clone Your Maven Project**
