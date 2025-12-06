@@ -237,5 +237,3 @@ Example: Hardcoded credentials.
 * Technical debt
 
 ---
-
-Just say: **"Yes, create PDF"**
