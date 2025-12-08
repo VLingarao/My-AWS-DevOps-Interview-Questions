@@ -19,9 +19,7 @@ This repository helps you prepare **end-to-end** for Cloud + DevOps job intervie
 | **Linux**                      | Most asked Linux commands & practical troubleshooting questions     |
 | **Networking-Security**        | VPC, Subnets, NAT, IAM, Security Groups, OSI model questions        |
 | **Terraform**                  | Terraform basics, modules, state file, backend, interview questions |
-| **README.md**                  | Intro + Learning Roadmap + Usage guide                              |
----------------------------------+----------------------------------------------------------------------
----
+| **README.md**                  | Intro + Learning Roadmap + Usage guide                            
 
 ## **🎯 Purpose of This Repository**
 
