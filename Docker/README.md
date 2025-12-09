@@ -103,4 +103,4 @@
 **43. docker rm -f $ -->(docker ps -aq)  -->(delete al running and stoped all)**
 * -->(Force delete all containers: running + stopped)*
 
-**44. docker rmi nginx ** * -->(Remove nginx image from EC2)*
+**44. docker rmi nginx** * -->(Remove nginx image from EC2)*
