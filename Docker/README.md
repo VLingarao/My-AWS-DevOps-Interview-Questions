@@ -1,5 +1,3 @@
----
-
 # **Docker On EC2 (Open Source Containerisation Platform, Docker Alternate Tool: Rocketd)**
 
 ------------------ **Day -1** ------------------
@@ -106,5 +104,3 @@
 *(Force delete all containers: running + stopped)*
 
 **44. docker rmi nginx ()** *(Remove nginx image from EC2)*
-
----
