@@ -1,6 +1,6 @@
 # **Docker On EC2  (Open Source Containerisation Platform, Docker Alternate Tool: Rocketd)**
 
------------------- **Day -1** ------------------
+# ------ Day-1 ----------
 
 **1. yum install docker -y** * -->(Install Docker package into EC2 automatically without asking for confirmation)*
 
@@ -69,7 +69,7 @@
 
 **30. docker logs id** * -->(Get logs of container using container ID)*
 
------------------- **Day -2** ------------------
+# ------ Day-2 ----------
 
 **31. cat etc/** * -->(List content of /etc directory)*
 
@@ -117,7 +117,7 @@ This is the exact process you follow **after creating a new EC2 instance** and *
 
 ---
 
-# **------ Day-3 (Docker_Python_Flask Project) ----------
+# ------ Day-3 (Docker_Python_Flask Project) ----------
 
 ---
 # **STAGE-1: Connect to EC2**
