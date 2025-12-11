@@ -104,3 +104,191 @@
 * -->(Force delete all containers: running + stopped)*
 
 **44. docker rmi nginx** * -->(Remove nginx image from EC2)*
+
+Below is the **clean, correct, production-style workflow**, covering only:
+
+### **Stage-1 to Stage-7**
+
+and
+
+### **A sample Flask Dockerfile** (professional, working version)
+
+This is the exact process you follow **after creating a new EC2 instance** and **installing Docker**.
+
+---
+
+# **------ Day-3 (Docker_Python_Flask Project) ----------
+
+---
+# **STAGE-1: Connect to EC2**
+1. **ssh -i key.pem ec2-user@Public_IP**
+   (Connect to your EC2 instance.)
+---
+# **STAGE-2: Install Docker (Already Done)**
+
+You already ran:
+```
+* yum install docker -y
+* systemctl start docker
+* systemctl enable docker
+```
+Continue below.
+
+---
+
+# **STAGE-3: Add EC2 User to Docker Group**
+
+This prevents “permission denied” errors.
+
+2. **sudo usermod -aG docker ec2-user**
+3. **logout**
+4. **ssh into EC2 again**
+
+(Now docker commands work without sudo.)
+
+---
+
+# **STAGE-4: Get Your Flask Project on EC2**
+
+You must bring your Flask project code to the server.
+
+### Option A: Clone from GitHub (recommended)
+
+5. **sudo yum install git -y**
+6. **git clone https://github.com/VLingarao/docker_flaskapp.git**
+7. **cd flaskapp**
+
+### Option B: Create a small test Flask project
+
+Use if you don’t have code.
+
+5.
+
+```
+mkdir flaskapp
+cd flaskapp
+```
+
+6. Create files:
+
+```
+touch app.py
+touch requirements.txt
+touch Dockerfile
+```
+
+7. Add basic Flask code into app.py:
+
+```
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Flask Docker app running successfully!"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
+```
+
+8. requirements.txt:
+
+```
+Flask
+```
+
+---
+
+# **STAGE-5: Build Docker Image**
+
+Move into your project folder where Dockerfile exists.
+
+9. **docker build -t flaskapp .**
+   (Example: creates image with the name flaskapp)
+
+Explanation:
+Reads your Dockerfile and builds a Docker image.
+
+---
+
+# **STAGE-6: Run the Container**
+
+10. **docker run -dt -p 5000:5000 flaskapp**
+
+Explanation:
+
+* Runs the image named flaskapp
+* Exposes port 5000
+* Starts Flask server inside Docker
+* -d = detached mode
+
+Open in browser:
+**http://EC2_Public_IP:5000**
+
+---
+
+# **STAGE-7: Manage / Debug the Running Container**
+
+Use these commands after the container is running:
+
+### 11. **docker exec -it containerID /bin/bash**
+
+(Enter the container terminal)
+
+### 12. **docker logs containerID**
+
+(View Flask logs)
+
+### 13. **docker inspect flaskapp**
+
+(See full metadata of your image)
+
+---
+
+# **STAGE-1 to STAGE-7 Final Order (Clean Summary)**
+
+1. ssh into EC2
+2. Install Docker
+3. Add docker group
+4. Upload or create Flask project
+5. cd flaskapp
+6. docker build -t flaskapp .
+7. docker run -dt -p 5000:5000 flaskapp
+8. docker exec -it containerID /bin/bash
+9. docker logs containerID
+10. docker inspect flaskapp
+
+(These cover all your commands required for Docker + Flask deployment.)
+
+---
+
+# **SAMPLE DOCKERFILE (Flask Production-Ready)**
+
+Place this as **Dockerfile** in your project folder.
+
+```
+# Use official Python base image
+FROM python:3.9-slim
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy requirement file
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy project files into container
+COPY . .
+
+# Expose Flask port
+EXPOSE 5000
+
+# Command to run the Flask app
+CMD ["python", "app.py"]
+```
+
+This Dockerfile is perfect for any Flask project.
+
+---
