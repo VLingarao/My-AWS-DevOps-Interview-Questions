@@ -175,3 +175,11 @@
 42. **How to get a list of installed Jenkins plugins with name and version pair?**
 
 ---
+
+---
+---
+#  Jenkins Exercises – Step-by-Step Learning Flow (Easy ➜ Hard) - Solutions
+---
+---
+
+
