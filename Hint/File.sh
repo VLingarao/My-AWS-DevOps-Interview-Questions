@@ -9,13 +9,24 @@ sudo yum install git -y
 
 sudo yum install java-17-amazon-corretto.x86_64
 
-#------------jenkins install-------------
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-sudo yum install jenkins -y
-sudo systemctl enable jenkins
-sudo systemctl start jenkins
+#----------Install Java 17------------
+sudo amazon-linux-extras install java-openjdk11 -y
+java -version
 
+#-------------Add the Jenkins repository-------
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+#--------Import the Jenkins GPG key---------
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+#------------Install Jenkins-----------
+sudo yum install jenkins -y
+#----------Start Jenkins--------
+sudo systemctl start jenkins
+#---------Enable Jenkins to start on boot------
+sudo systemctl enable jenkins
+#--------Check the service status to confirm it's running------
+sudo systemctl status Jenkins
+#---------Access the Jenkins Web Interface-------
+Open your web browser and navigate to http://<your_instance_public_ip>:8080. 
 #-----------Initial jenkins Password-------------
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
