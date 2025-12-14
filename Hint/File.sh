@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo yum update -y
+sudo yum update -y  (updates all installed packages on a YUM-based Linux system to the latest versions without user interaction.)
 
 #---------------git install ---------------
 
