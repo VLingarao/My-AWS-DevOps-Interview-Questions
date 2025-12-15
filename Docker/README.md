@@ -1,294 +1,210 @@
-# **Docker On EC2  (Open Source Containerisation Platform, Docker Alternate Tool: Rocketd)**
+---
 
-# ------ Day-1 ----------
+# Docker on EC2 – 2 Years DevOps Engineer Knowledge & Practice Guide
 
-**1. yum install docker -y** * -->(Install Docker package into EC2 automatically without asking for confirmation)*
+## Docker Overview
 
-**2. systemctl start docker** * -->(Start Docker service)*
-
-**3. systemctl enable docker** * -->(Enable Docker auto-start on system reboot)*
-
-**4. systemctl status docker** * -->(Check Docker service is running or not)*
-
-**5. docker --version** * -->(Shows installed Docker version)*
-
-**6. docker version  -->(it will give the client and server)** *(Displays detailed client & server Docker version)*
-
-**7. docker default path is /var/lib/docker** * -->(Location where Docker stores images, containers, layers)*
-
-**8. docker pull nginx  -->(it will go to docker hub registry image, next time it will on check the docker file it will give the quick)** * -->(Downloads nginx image from Docker Hub registry)*
-
-**9. docker images  -->(it will give the list off docker images in your ec2)** *(Displays all downloaded Docker images)*
-
-**10. docker run nginx  -->(container will run)** *(Runs nginx container in foreground mode)*
-
-**11. if control + c  -->(stops the container)** *(Ctrl+C stops foreground running container)*
-
-**12. docker run -dt nginx** * -->(Runs container in detached mode (-d) with terminal (-t))*
-
-**13. docker ps  -->(give the list off running containers)** *(Shows only running containers)*
-
-**14. docker ps -a  -->(it will show the both running and stopped containers )** *(Shows all containers including stopped ones)*
-
-**15. docker ps -a | grep exited  -->(give the exited containers list)** *(Filters only exited/stopped containers)*
-
-**16. docker run -dt -p 81:80 nginx  -->(this docker run on this port number ex : -p <localhostport>:<targetcontainer> nginx)**
-* -->(Maps EC2 port 81 → container port 80, run nginx)*
-
-**17. ec2 public ip  -->(3.87.10.80):81  -->(give the broser default nginx page)**
-* -->(Access nginx webpage using EC2 public IP on mapped port)*
-
-**18. if you done ec2 Nginx installing it will give the Nginx default Page**
-* -->(EC2-installed nginx also gives same default page)*
-
-**19. if docker run -dt -p 80:80 nginx  -->(it will through the error if run docker on ec2 exapet docker don't run any other on ec2)**
-* -->(Port conflict occurs because EC2 already using port 80)*
-
-**20. docker pull ubuntu  -->(it will install the docker hub img base os img)**
-* -->(Downloads Ubuntu base OS image)*
-
-**21. docker run -it ubuntu /bin/bash  -->(run a continer on go inside container)**
-* -->(Run Ubuntu container and open interactive bash shell)*
-
-**22. ls  -->(give the list off)** * -->(List files inside container)*
-
-**23. ps -ef  -->(give the number of prosses on running)** *(Shows running processes inside container)*
-
-**24. ps -ef | wc -l** * -->(Counts number of running processes)*
-
-**25. exit** * -->(Exit from container terminal)*
-
-**26. now run ps -ef  -->(so many prosses are running) and ps -ef | wc -l  -->(138)**
-* -->(EC2 has many processes compared to container)*
-
-**27. control + p + q** * -->(Detach from container without stopping it)*
-
-**28. docker pull httpd** * -->(Download Apache HTTP server image)*
-
-**29. docker run -dt -p 87:80 httpd** * -->(Run Apache server on port 87)*
-
-**30. docker logs id** * -->(Get logs of container using container ID)*
-
-# ------ Day-2 ----------
-
-**31. cat etc/** * -->(List content of /etc directory)*
-
-**32. sudo usermod -a -G docker ec2-user  -->(add user into Docker Group || if you run docker pull nginx on ec2-user get permission denied)**
-* -->(Add ec2-user to docker group so it can run Docker without sudo)*
-
-**33. newgrp docker** * -->(Refresh group membership so new Docker permissions apply)*
-
-**34. docker inspect nginx** * -->(Shows detailed metadata of nginx image)*
-
-**35. docker run -it -p 81:80 nginx /bin/bash** * -->(Run nginx container and enter bash shell with port mapping)*
-
-**36. control + p + q  -->(<-- is not kill the container) -->(exit command is kill)**
-* -->(Detach without stopping, exit command kills the session)*
-
-**37. docker exec -it a823bc1971142 -->(container ID)  -->(-->  )**
-* -->(Access a running container shell)*
-
-**38. docker pull Jenkins/Jenkins** * -->(Download Jenkins official Docker image)*
-
-**39. docker run -dt -p 8081:8080 Jenkins/Jenkins  -->(Jenkins install on docker container )  -->(for password refer 37 point)**
-* -->(Run Jenkins container, access with port 8081, password inside container logs)*
-
-**40. docker rm conID -f** * -->(Force remove a container)*
-
-**41. docker stop conId after 40** * -->(Stop container — but here container already removed so not required)*
-
-**42. docker container prune  -->(delt all container stopd only)**
-* -->(Delete only stopped containers)*
-
-**43. docker rm -f $ -->(docker ps -aq)  -->(delete al running and stoped all)**
-* -->(Force delete all containers: running + stopped)*
-
-**44. docker rmi nginx** * -->(Remove nginx image from EC2)*
-
-Below is the **clean, correct, production-style workflow**, covering only:
-
-### **Stage-1 to Stage-7**
-
-and
-
-### **A sample Flask Dockerfile** (professional, working version)
-
-This is the exact process you follow **after creating a new EC2 instance** and **installing Docker**.
+Docker is an **open-source containerization platform** used to package applications with their dependencies into lightweight containers. It enables **consistent deployment**, **faster CI/CD**, and **environment parity** across development, testing, and production.
 
 ---
 
-# ------ Day-3 (Docker_Python_Flask Project) ----------
+## 1. Docker Commands (2 Years Experience Level)
 
----
-# **STAGE-1: Connect to EC2**
-1. **ssh -i key.pem ec2-user@Public_IP**
-   (Connect to your EC2 instance.)
----
-# **STAGE-2: Install Docker (Already Done)**
+### Image & Container Basics
 
-You already ran:
-```
-* yum install docker -y
-* systemctl start docker
-* systemctl enable docker
-```
-Continue below.
+1. `docker --version` – Check installed Docker version
+2. `docker version` – Display Docker client and server details
+3. `docker info` – Show Docker system-wide information
+4. `docker pull <image>` – Download image from Docker registry
+5. `docker images` – List all Docker images
+6. `docker rmi <image>` – Remove Docker image
 
 ---
 
-# **STAGE-3: Add EC2 User to Docker Group**
+### Container Lifecycle
 
-This prevents “permission denied” errors.
-
-2. **sudo usermod -aG docker ec2-user**
-3. **logout**
-4. **ssh into EC2 again**
-
-(Now docker commands work without sudo.)
-
----
-
-# **STAGE-4: Get Your Flask Project on EC2**
-
-You must bring your Flask project code to the server.
-
-### Option A: Clone from GitHub (recommended)
-
-5. **sudo yum install git -y**
-6. **git clone https://github.com/VLingarao/docker_flaskapp.git**
-7. **cd flaskapp**
-
-### Option B: Create a small test Flask project
-
-Use if you don’t have code.
-
-5.
-
-```
-mkdir flaskapp
-cd flaskapp
-```
-
-6. Create files:
-
-```
-touch app.py
-touch requirements.txt
-touch Dockerfile
-```
-
-7. Add basic Flask code into app.py:
-
-```
-from flask import Flask
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "Flask Docker app running successfully!"
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0")
-```
-
-8. requirements.txt:
-
-```
-Flask
-```
+7. `docker run <image>` – Create and start a container
+8. `docker run -dt <image>` – Run container in detached mode
+9. `docker ps` – List running containers
+10. `docker ps -a` – List all containers
+11. `docker start <container>` – Start stopped container
+12. `docker stop <container>` – Stop running container
+13. `docker restart <container>` – Restart container
+14. `docker rm <container>` – Remove container
+15. `docker rm -f <container>` – Force remove container
 
 ---
 
-# **STAGE-5: Build Docker Image**
+### Port & Network
 
-Move into your project folder where Dockerfile exists.
-
-9. **docker build -t flaskapp .**
-   (Example: creates image with the name flaskapp)
-
-Explanation:
-Reads your Dockerfile and builds a Docker image.
+16. `docker run -p 8080:80 <image>` – Port mapping (host → container)
+17. `docker inspect <container>` – View container network & metadata
+18. `docker network ls` – List Docker networks
+19. `docker network inspect <network>` – Inspect network details
 
 ---
 
-# **STAGE-6: Run the Container**
+### Debugging & Monitoring
 
-10. **docker run -dt -p 5000:5000 flaskapp**
-
-Explanation:
-
-* Runs the image named flaskapp
-* Exposes port 5000
-* Starts Flask server inside Docker
-* -d = detached mode
-
-Open in browser:
-**http://EC2_Public_IP:5000**
+20. `docker logs <container>` – View container logs
+21. `docker logs -f <container>` – Follow logs live
+22. `docker exec -it <container> /bin/bash` – Access running container
+23. `docker stats` – View container CPU & memory usage
 
 ---
 
-# **STAGE-7: Manage / Debug the Running Container**
+### Cleanup & Maintenance
 
-Use these commands after the container is running:
-
-### 11. **docker exec -it containerID /bin/bash**
-
-(Enter the container terminal)
-
-### 12. **docker logs containerID**
-
-(View Flask logs)
-
-### 13. **docker inspect flaskapp**
-
-(See full metadata of your image)
+24. `docker container prune` – Remove stopped containers
+25. `docker image prune` – Remove unused images
+26. `docker system prune` – Clean unused Docker resources
 
 ---
 
-# **STAGE-1 to STAGE-7 Final Order (Clean Summary)**
+### Dockerfile & Build
 
-1. ssh into EC2
-2. Install Docker
-3. Add docker group
-4. Upload or create Flask project
-5. cd flaskapp
-6. docker build -t flaskapp .
-7. docker run -dt -p 5000:5000 flaskapp
-8. docker exec -it containerID /bin/bash
-9. docker logs containerID
-10. docker inspect flaskapp
-
-(These cover all your commands required for Docker + Flask deployment.)
+27. `docker build -t <image_name> .` – Build image from Dockerfile
+28. `docker build -f Dockerfile.dev -t app-dev .` – Custom Dockerfile
+29. `docker tag <image> <repo>:<tag>` – Tag Docker image
 
 ---
 
-# **SAMPLE DOCKERFILE (Flask Production-Ready)**
+### Registry (Docker Hub / ECR)
 
-Place this as **Dockerfile** in your project folder.
-
-```
-# Use official Python base image
-FROM python:3.9-slim
-
-# Set working directory inside container
-WORKDIR /app
-
-# Copy requirement file
-COPY requirements.txt .
-
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy project files into container
-COPY . .
-
-# Expose Flask port
-EXPOSE 5000
-
-# Command to run the Flask app
-CMD ["python", "app.py"]
-```
-
-This Dockerfile is perfect for any Flask project.
+30. `docker login` – Authenticate to Docker registry
+31. `docker push <image>` – Push image to registry
+32. `docker pull <image>` – Pull image from registry
 
 ---
+
+## 2. Docker Important Topics Covered (2 Years DevOps Engineer Level)
+
+A **2-year DevOps engineer is expected to KNOW and EXPLAIN**:
+
+1. Docker architecture (Client, Daemon, Registry)
+2. Difference between **VMs vs Containers**
+3. Image vs Container
+4. Dockerfile instructions
+
+   * `FROM`, `RUN`, `COPY`, `ADD`, `CMD`, `ENTRYPOINT`, `EXPOSE`, `ENV`
+5. CMD vs ENTRYPOINT (very common interview question)
+6. Docker networking
+
+   * Bridge
+   * Host
+7. Port mapping and port conflicts
+8. Docker volumes vs bind mounts
+9. Container logs & troubleshooting
+10. Resource limits (CPU, Memory)
+11. Multi-stage Docker builds
+12. Docker Compose (basic understanding)
+13. Docker security basics
+
+* Non-root containers
+* Minimal base images
+
+14. Docker in CI/CD pipelines
+
+* Jenkins + Docker
+
+15. Docker registry
+
+* Docker Hub
+* AWS ECR
+
+16. Difference between `docker run` and `docker start`
+17. Docker container lifecycle
+18. Container persistence & stateless nature
+19. Real-world Docker issues & fixes
+20. Docker → Kubernetes readiness concepts
+
+---
+
+## 3. Docker Task List (Must Practice – 2 Years DevOps Engineer)
+
+These are **mandatory hands-on tasks** a 2-year DevOps engineer **must have practiced**.
+
+---
+
+### Foundation Tasks
+
+1. Create an EC2 instance and install Docker
+2. Enable Docker service and verify installation
+3. Run nginx container and access via browser
+4. Understand port conflicts on EC2
+
+---
+
+### Container Management
+
+5. Start, stop, restart, and remove containers
+6. Inspect container metadata and networking
+7. View and analyze container logs
+8. Access running container using `docker exec`
+
+---
+
+### Image & Dockerfile Tasks
+
+9. Create a Dockerfile for Python Flask application
+10. Build and run Flask app container
+11. Modify code and rebuild image
+12. Use `.dockerignore` file
+
+---
+
+### Java & Maven Docker Tasks
+
+13. Dockerize a Java Maven application
+14. Build JAR using Maven inside Docker
+15. Use multi-stage Dockerfile for Java app
+
+---
+
+### Volumes & Networking
+
+16. Use Docker volumes for data persistence
+17. Test container-to-container communication
+18. Create custom bridge network
+
+---
+
+### Registry & CI/CD
+
+19. Push Docker image to Docker Hub
+20. Create AWS ECR repository and push image
+21. Jenkins pipeline to build Docker image
+22. Jenkins pipeline to push image to registry
+
+---
+
+### Advanced & Production Tasks
+
+23. Limit container CPU and memory
+24. Run Jenkins inside Docker
+25. Scan Docker images (basic security)
+26. Docker Compose for multi-container app
+27. Migrate Docker app toward Kubernetes
+
+---
+
+## 2-Year DevOps Engineer Readiness Check
+
+You are **2-year Docker-ready** if you can:
+
+* Write Dockerfile without Google
+* Debug container failures
+* Explain CMD vs ENTRYPOINT
+* Integrate Docker with Jenkins
+* Push images to ECR
+* Run production-style containers on EC2
+
+---
+
+### What I Recommend Next
+
+1. **Java + Maven Multi-stage Dockerfile**
+2. **Docker Compose real project**
+3. **Jenkins → Docker → ECR pipeline**
+4. **Docker interview Q&A (2 years)**
+5. **Docker to Kubernetes transition**
