@@ -1,185 +1,287 @@
-# Jenkins Exercises – Step-by-Step Learning Flow (Easy ➜ Hard)
+---
+
+# Jenkins Hands-On Tasks 
+
+## Task 1 – Jenkins Foundation & Tooling (Baseline Skill)
+
+**Objective:** Prove you understand Jenkins + build tools.
+
+**Hands-on**
+
+* Install Jenkins
+* Configure **Global Tool Configuration**
+
+  * JDK
+  * Maven
+  * Ant
+* Verify tools using:
+
+  ```
+  java -version
+  mvn -version
+  ant -version
+  ```
+
+**Deliverable**
+
+* Jenkins dashboard accessible
+* Tools visible under **Manage Jenkins → Global Tool Configuration**
 
 ---
 
-## Exercise 1 – Jenkins Job Creation (Foundation Level)
+## Task 2 – Freestyle Job with Apache Ant
 
-### Phase 1: Basic Freestyle Jobs (Very Important)
+**Project:** `helloworld-java-ant`
 
-1. **Setup a Jenkins Job with Apache Ant Build Tool**
-   Source Code: [https://github.com/scmgalaxy/helloworld-java-ant](https://github.com/scmgalaxy/helloworld-java-ant)
+**Hands-on**
 
-2. **Setup a Jenkins Job with Apache Maven**
-   Source Code: [https://github.com/scmgalaxy/helloworld-java-maven](https://github.com/scmgalaxy/helloworld-java-maven)
+* Create Freestyle Job
+* Git checkout
+* Build using Ant
+* Generate `.jar`
 
-> Why first?
-> These two cover **Java + Build Tool + Jenkins integration**, which is core CI knowledge.
+**Validation**
 
----
+* Console output shows `BUILD SUCCESS`
+* JAR exists in workspace
 
-### Phase 2: OS-Specific & Script-Based Jobs
+**Key Concepts**
 
-3. **Setup a Jenkins Job with Batch Script (Windows)**
-   Source Code: [https://github.com/scmgalaxy/teamcity-batch-helloworld](https://github.com/scmgalaxy/teamcity-batch-helloworld)
-
-4. **Setup a Jenkins Job with NAnt**
-   Source Code: [https://github.com/scmgalaxy/teamcity-nant-helloworld](https://github.com/scmgalaxy/teamcity-nant-helloworld)
-
-5. **Setup a Jenkins Job with .NET Code Base**
-   Source Code: [https://github.com/scmgalaxy/teamcity-dotnet-service](https://github.com/scmgalaxy/teamcity-dotnet-service)
-
-> Why here?
-> This introduces **Windows jobs, .NET builds, and cross-platform CI concepts**.
+* SCM integration
+* Build lifecycle
+* Workspace usage
 
 ---
 
-### Phase 3: Jenkins Pipeline (Must-Know – High Priority)
+## Task 3 – Freestyle Job with Maven (Critical)
 
-6. **Setup a Jenkins Build Pipeline with stages:**
+**Project:** `helloworld-java-maven`
 
-   * Build
-   * Test
-   * Package
-   * Deploy
+**Hands-on**
 
-   Source Code: [https://github.com/scmgalaxy/helloworld-java-maven](https://github.com/scmgalaxy/helloworld-java-maven)
+* Configure Maven job
+* Run:
 
-> Pipelines are **mandatory for real-world DevOps roles**.
+  ```
+  mvn clean package
+  ```
+* Archive artifacts
 
----
+**Validation**
 
-## Exercise 2 – Jenkins Nodes & Distributed Builds (Core CI Architecture)
+* `target/*.jar` archived
+* Unit tests executed
 
-### Phase 4: Jenkins Master–Agent Setup
+**Interview Mapping**
 
-7. **Add a Linux Node (Check SSH Slaves Plugin)**
-
-8. **Add a Windows Node**
-
-> These steps teach **distributed Jenkins architecture**.
-
----
-
-### Phase 5: Node-Based Job Assignment (Very Important)
-
-9. **Assign a Java-based Job to Linux Node and Build It**
-
-10. **Assign an MSBuild-based Job to Windows Node and Build It**
-
-> Rule (Very Important):
->
-> * Environment variables
-> * Tool locations (Java, Maven, MSBuild)
->   **Must be configured in Node settings**, not in Jenkins jobs.
+* “How does Jenkins work with Maven?”
+* “What happens if tests fail?”
 
 ---
 
-## Exercise 3 – Jenkins CI/CD, Git, Triggers & Administration
+## Task 4 – Windows-Specific Job (Batch Script)
 
-### Phase 6: Git Integration & Triggers (Top Interview Questions)
+**Project:** `teamcity-batch-helloworld`
 
-11. **How can I make Jenkins CI with Git trigger on pushes to master?**
+**Hands-on**
 
-12. **How do I make Jenkins build on push to a Bitbucket Git repository?**
+* Create Windows Freestyle Job
+* Execute `.bat` script
+* Handle Windows path variables
 
-13. **Jenkins – How to build a specific branch**
+**Key Learning**
 
-14. **Jenkins Git Plugin: How to build a specific tag?**
+* OS-specific Jenkins jobs
+* Batch scripting in CI
 
-15. **How to exclude a Git branch from building in Jenkins**
-
-> These questions together cover **Git + Webhooks + Branch strategy**.
 
 ---
 
-### Phase 7: Job Scheduling & Job Flow Control
+## Task 5 – Jenkins Pipeline (Declarative) – MUST
 
-16. **How to schedule jobs in Jenkins**
+**Project:** `helloworld-java-maven`
 
-17. **How do I make a Jenkins job start after multiple simultaneous upstream jobs succeed?**
+**Hands-on**
 
-18. **How to conditionally build other projects?**
+* Convert Freestyle → Pipeline
+* Create stages:
 
-19. **Same workspace for multiple jobs**
+  * Checkout
+  * Build
+  * Test
+  * Package
+  * Deploy (dummy)
 
-20. **Jenkins – maximum number of concurrent jobs**
+**Deliverable**
 
-> Focus: **job dependency, chaining, concurrency control**.
-
----
-
-### Phase 8: Job Management & Reusability
-
-21. **How do I clone a job in Jenkins?**
-
-22. **Export / Import jobs in Jenkins**
-
-23. **Checkout multiple Git repositories into the same Jenkins workspace**
-
-24. **Jenkins – passing variables between jobs**
-
-25. **How to promote a specific build number from another job in Jenkins?**
-
----
-
-### Phase 9: Build & Test Control (Critical for CI Quality)
-
-26. **How do I make Jenkins build fail when Maven unit tests fail?**
-
-27. **Execute Shell Script after post-build in Jenkins**
-
-28. **Jenkins HTML in Job description**
+```groovy
+pipeline {
+  agent any
+  stages {
+    stage('Build') { ... }
+    stage('Test') { ... }
+    stage('Package') { ... }
+    stage('Deploy') { ... }
+  }
+}
+```
 
 ---
 
-### Phase 10: Jenkins Security & User Management (Very Important)
+## Task 6 – Jenkinsfile from Git (Production Standard)
 
-29. **Jenkins security – hide all screens unless user is logged in**
+**Hands-on**
 
-30. **Jenkins restrict view of jobs per user**
+* Move pipeline code into `Jenkinsfile`
+* Use SCM pipeline
+* Trigger build from repo
 
-31. **Managing SSH keys within Jenkins for Git**
+**Key Concepts**
 
----
-
-### Phase 11: Jenkins Administration & Maintenance
-
-32. **How to move Jenkins from one PC to another?**
-
-33. **How to start Jenkins on a different port rather than 8080 using Command Prompt (Windows)?**
-
-34. **How to run Jenkins as a different user**
-
-35. **How to shutdown Jenkins safely?**
-
-36. **How to restart Jenkins manually?**
+* Pipeline as Code
+* Version control for CI/CD
 
 ---
 
-### Phase 12: Jenkins Configuration & Environment
+## Task 7 – Jenkins Master–Agent Architecture
 
-37. **Jenkins / Hudson environment variables**
+**Hands-on**
 
-38. **How to reset build number in Jenkins?**
+* Configure:
 
-39. **How do I clear my Jenkins / Hudson build history?**
+  * 1 Linux agent (SSH)
+  * 1 Windows agent
+* Verify labels
 
-40. **Change Jenkins default view**
+**Validation**
+
+* Jobs run on correct nodes
+
+**Interview Question Covered**
+
+* “Explain Jenkins Master & Agent”
+
+---
+
+## Task 8 – Node-Specific Builds (Advanced)
+
+**Hands-on**
+
+* Java job → Linux node
+* Batch/MSBuild job → Windows node
+* Configure tools at node level
+
+**Key Rule (Interview Favorite)**
+
+> Tools must be configured at node level, not job level
 
 ---
 
-### Phase 13: Plugin & System-Level Operations
+## Task 9 – Git Webhook Integration (Real CI)
 
-41. **How to install a plugin in Jenkins manually?**
+**Hands-on**
 
-42. **How to get a list of installed Jenkins plugins with name and version pair?**
+* Configure GitHub webhook
+* Trigger build on push to `main`
+* Validate payload delivery
+
+**Validation**
+
+* Jenkins auto-builds on commit
 
 ---
 
----
----
-#  Jenkins Exercises – Step-by-Step Learning Flow (Easy ➜ Hard) - Solutions
----
+## Task 10 – Branch & Tag-Based Builds
+
+**Hands-on**
+
+* Build only:
+
+  * `main` branch
+  * Release tags (`v*`)
+* Exclude feature branches
+
+**Concepts**
+
+* Branch strategies
+* Release pipelines
+
 ---
 
+## Task 11 – Job Chaining & Dependencies
 
+**Hands-on**
+
+* Job A → Job B → Job C
+* Build only if upstream succeeds
+* Parallel execution where applicable
+
+**Concepts**
+
+* Upstream/downstream
+* Fan-in / fan-out
+
+---
+
+## Task 12 – Parameters & Environment Control
+
+**Hands-on**
+
+* Parameterized build:
+
+  * ENV = dev / qa / prod
+* Pass parameters between jobs
+
+**Validation**
+
+* Same pipeline behaves differently per ENV
+
+---
+
+## Task 13 – Credentials & Security (Very Important)
+
+**Hands-on**
+
+* Store:
+
+  * Git credentials
+  * SSH keys
+* Use credentials in pipeline
+* Mask secrets in logs
+
+**Interview Mapping**
+
+* “How does Jenkins handle secrets?”
+
+---
+
+## Task 14 – Jenkins Security & RBAC
+
+**Hands-on**
+
+* Enable authentication
+* Create users
+* Restrict job access by role
+* Disable anonymous access
+
+**Concepts**
+
+* Least privilege
+* Enterprise Jenkins setup
+
+---
+
+## Task 15 – Jenkins Backup, Restore & Maintenance
+
+**Hands-on**
+
+* Backup `$JENKINS_HOME`
+* Restore Jenkins on another machine
+* Restart, shutdown safely
+* Change port from 8080
+
+**Final Outcome**
+
+* You understand Jenkins as an **admin + DevOps engineer**
+
+---
