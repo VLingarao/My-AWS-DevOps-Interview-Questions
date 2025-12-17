@@ -1,5 +1,3 @@
----
-
 # Jenkins Hands-On Tasks 
 
 ## Task 1 – Jenkins Foundation & Tooling (Baseline Skill)
