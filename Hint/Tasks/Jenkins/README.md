@@ -1,5 +1,5 @@
 # Jenkins Hands-On Tasks 
-
+## Jenkins On CMD = java -jar C//jenkins.war file path
 ## Task 1 – Jenkins Foundation & Tooling (Baseline Skill)
 
 **Objective:** Prove you understand Jenkins + build tools.
